@@ -23,13 +23,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> findUser(String userName, String password) {
         Map<String,Object> data = new HashMap<String,Object>();
-        User user = userMapper.selectByUserName(userName);
-        System.out.println(user.toString());
+        User user = userMapper.queryByName(userName);
         if (StringUtils.isEmpty(user)){
             data.put("code",Constant.LOGIN_NAME_ERROR_MESSAGE);
         }else {
             if(user.getPassword().equals(password)){
-                data.put("code",Constant.LOGIN_OK_MESSAGE);
+                data.put("code",Constant.LOGIN_OK);
                 data.put("userName",user.getUserName());
                 data.put("phone", user.getPhone());
                 data.put("address", user.getAddress());
