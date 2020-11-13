@@ -12,19 +12,19 @@
     <context:component-scan base-package="com.lpw"/>
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="${driver}"/>
-        <property name="url" value="${url}"/>
-        <property name="username" value="${username}"/>
-        <property name="password" value="${password}"/>
-        <property name="initialSize"  value="${initialSize}"/>
-        <property name="maxIdle" value="${maxIdle}"/>
-        <property name="minIdle" value="${minIdle}"/>
-        <property name="maxActive" value="${maxActive}"/>
-        <property name="maxWait" value="${maxWait}"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize"  value="${jdbc.initialSize}"/>
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
     </bean>
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:/mapper/*.xml"/>
+        <property name="mapperLocations" value="classpath:/mapper/*.xml"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
