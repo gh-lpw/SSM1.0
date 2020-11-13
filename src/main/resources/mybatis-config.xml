@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<settings>
+    <!--
+    允许JDBC支持自动生成主键，需要驱动兼容。
+    如果设置为true则这个设置强制使用自动生成主键，尽管一些驱动不能兼容但仍可正常工作（比如 Derby）。
+    -->
+    <setting name="useGeneratedKeys" value="true" />
+    <!--    是否可以使用列的别名 (取决于驱动的兼容性) default:true-->
+    <setting name="useColumnLabel" value="true" />
+    <!--    [是否 启用  数据中 A_column 自动映射 到 Java类中驼峰命名的属性 default:fasle] -->
+    <setting name="mapUnderscoreToCamelCase" value="true" />
+    <!--打印sql信息-->
+    <setting name="logImpl" value="STDOUT_LOGGING" />
+</settings>
+</configuration>
