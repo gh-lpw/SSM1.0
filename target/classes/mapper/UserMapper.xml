@@ -1,27 +1,102 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lpw.dao.UserMapper" >
-    <resultMap id="BaseResultMap" type="com.lpw.entity.User" >
-        <id column="ID" property="id" jdbcType="INTEGER" />
-        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
-        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
-        <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-        <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lpw.dao.UserMapper">
+
+    <resultMap type="com.lpw.entity.User" id="TestUserMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="userName" column="USER_NAME" jdbcType="VARCHAR"/>
+        <result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+        <result property="address" column="ADDRESS" jdbcType="VARCHAR"/>
+        <result property="phone" column="PHONE" jdbcType="VARCHAR"/>
     </resultMap>
-    <sql id="Base_Column_List" >
-    ID, USER_NAME, PASSWORD, ADDRESS, PHONE
-  </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+
+    <!--查询单个-->
+    <select id="queryByName" resultMap="TestUserMap">
         select
-        <include refid="Base_Column_List" />
-        from test_user
-        where id = #{id,jdbcType=INTEGER}
+          ID, USER_NAME, PASSWORD, ADDRESS, PHONE
+        from ssm.test_user
+        where USER_NAME = #{userName}
     </select>
 
-    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TestUserMap">
         select
-        <include refid="Base_Column_List" />
-        from test_user
-        where USER_NAME = #{userName,jdbcType=VARCHAR}
+          ID, USER_NAME, PASSWORD, ADDRESS, PHONE
+        from ssm.test_user
+        limit #{offset}, #{limit}
     </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TestUserMap">
+        select
+        ID, USER_NAME, PASSWORD, ADDRESS, PHONE
+        from ssm.test_user
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                and USER_NAME = #{userName}
+            </if>
+            <if test="password != null and password != ''">
+                and PASSWORD = #{password}
+            </if>
+            <if test="address != null and address != ''">
+                and ADDRESS = #{address}
+            </if>
+            <if test="phone != null and phone != ''">
+                and PHONE = #{phone}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ssm.test_user(USER_NAME, PASSWORD, ADDRESS, PHONE)
+        values (#{userName}, #{password}, #{address}, #{phone})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into ssm.test_user(USER_NAME, PASSWORD, ADDRESS, PHONE)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userName}, #{entity.password}, #{entity.address}, #{entity.phone})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into ssm.test_user(USER_NAME, PASSWORD, ADDRESS, PHONE)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userName}, #{entity.password}, #{entity.address}, #{entity.phone})
+        </foreach>
+        on duplicate key update
+        USER_NAME = values(USER_NAME) , PASSWORD = values(PASSWORD) , ADDRESS = values(ADDRESS) , PHONE = values(PHONE)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ssm.test_user
+        <set>
+            <if test="userName != null and userName != ''">
+                USER_NAME = #{userName},
+            </if>
+            <if test="password != null and password != ''">
+                PASSWORD = #{password},
+            </if>
+            <if test="address != null and address != ''">
+                ADDRESS = #{address},
+            </if>
+            <if test="phone != null and phone != ''">
+                PHONE = #{phone},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ssm.test_user where ID = #{id}
+    </delete>
+
 </mapper>

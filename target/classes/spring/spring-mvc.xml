@@ -12,34 +12,10 @@
 
    <context:component-scan base-package="com.lpw.controller"/>
     <mvc:annotation-driven/>
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/index/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--    <context:component-scan base-package="com.lpw.controller"/>
-
-    <mvc:annotation-driven/>
-    <mvc:default-servlet-handler />  &lt;!&ndash; 解决静态资源无法被springMVC处理的问题 &ndash;&gt;
-
+    <mvc:default-servlet-handler/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
-    </bean>-->
+    </bean>
 
 </beans>

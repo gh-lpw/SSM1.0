@@ -12,13 +12,7 @@ public interface UserMapper {
      * @param userName
      * @return
      */
-    User selectByUserName(String userName);
+    User queryByName(String userName);
 
-    /**
-     * 通过主键查询用户信息
-     * @param id
-     * @return
-     */
-    User selectByPrimaryKey(Integer id);
 
 }

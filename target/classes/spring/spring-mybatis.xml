@@ -11,65 +11,29 @@
     
     <context:component-scan base-package="com.lpw"/>
     <context:property-placeholder location="classpath:jdbc.properties"/>
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="${driver}"/>
-        <property name="url" value="${url}"/>
-        <property name="username" value="${username}"/>
-        <property name="initialSize" value="${initialSize}"/>
-        <property name="maxActive" value="${maxActive}"/>
-        <property name="maxIdle" value="${maxIdle}"/>
-        <property name="minIdle" value="${minIdle$"/>
-        <property name="maxWait" value="${maxWait}"/>
+    <bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
     </bean>
-    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
-    </bean>
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
-        <property name="basePackage" value="com.lpw.dao"/>
-    </bean>
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" value="dataSource"/>
-    </bean>
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-
-
-
-
-
-
-
-
-    <!--<context:component-scan base-package="com.lpw"/>
-    <context:property-placeholder location="classpath:jdbc.properties"/>
-
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="${driver}"/>
-        <property name="url" value="${url}"/>
-        <property name="username" value="${username}"/>
-        <property name="initialSize" value="${initialSize}"/>  &lt;!&ndash;初始化连接大小&ndash;&gt;
-        <property name="maxActive" value="${maxActive}"/> &lt;!&ndash;连接池最大数量 &ndash;&gt;
-        <property name="maxIdle" value="${maxIdle}"/> &lt;!&ndash;连接池最大空闲&ndash;&gt;
-        <property name="minIdle" value="${minIdle}"/> &lt;!&ndash;连接池最小空闲&ndash;&gt;
-        <property name="maxWait" value="${maxWait}"/> &lt;!&ndash;获取最大等待时间&ndash;&gt;
-    </bean>
-
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean name="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:/mapper/*.xml"/>
-        <property name="configLocation" value="classpath:maybatis-config.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
-
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.lpw.dao"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
     </bean>
-
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <tx:annotation-driven transaction-manager="transactionManager"/>-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>
